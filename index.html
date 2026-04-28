@@ -904,7 +904,7 @@ footer {
       <div class="logo-sub">Powered by LanQi · 澜启</div>
     </div>
   </div>
-  <a href="#cta" class="nav-cta">预约试用</a>
+  <button class="nav-cta" onclick="openAuth('login')">登 录</button>
 </nav>
 
 <!-- HERO -->
@@ -929,7 +929,7 @@ footer {
   </p>
 
   <div class="hero-btns">
-    <a href="#cta" class="btn-primary">立即体验</a>
+    <button class="btn-primary" onclick="openAuth('register')">立即体验</button>
     <a href="#features" class="btn-secondary">了解功能</a>
   </div>
 
@@ -1115,21 +1115,54 @@ footer {
 <section class="cta-section" id="cta">
   <div class="reveal">
     <h2 class="cta-title">准备好让<em>AI</em>帮你<br>生成下一个爆款营销方案了吗？</h2>
-    <p class="cta-sub">现在预约内测，前50名商家免费体验专业版功能<br>留下手机号，我们会在24小时内联系您</p>
-
-    <div class="cta-form">
-      <input class="cta-input" type="tel" id="phoneInput" placeholder="请输入您的手机号" maxlength="11">
-      <button class="cta-submit" onclick="submitPhone()">预约试用</button>
-    </div>
-    <p class="cta-hint">或者直接联系我们</p>
-
-    <div class="cta-wechat">
-      <span>微信：</span>
-      <div class="wechat-id" onclick="copyWechat()">点击复制微信号</div>
-      <span>备注「星阅」即可</span>
+    <p class="cta-sub">免费注册，立即体验<br>专为精品民宿 · 高端餐饮 · 露营营地打造</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="openAuth('register')">免费注册</button>
+      <button class="btn-secondary" onclick="openAuth('login')">已有账号，登录</button>
     </div>
   </div>
 </section>
+
+<!-- AUTH MODAL -->
+<div id="authModal" style="display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); align-items:center; justify-content:center;">
+  <div style="background:#171717; border:1px solid rgba(212,175,55,0.2); border-radius:18px; padding:48px 40px; width:100%; max-width:420px; margin:20px; position:relative; animation:fadeDown 0.3s ease;">
+    
+    <!-- Close -->
+    <button onclick="closeAuth()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:#666;font-size:22px;cursor:pointer;line-height:1;">×</button>
+
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#F7E7A1;letter-spacing:0.3em;font-weight:300;">星阅增长引擎</div>
+      <div style="font-size:0.62rem;color:#666;letter-spacing:0.15em;margin-top:6px;">Powered by LanQi · 澜启</div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;border-bottom:1px solid rgba(212,175,55,0.16);margin-bottom:28px;">
+      <div id="tabLogin" onclick="switchAuthTab('login')" style="flex:1;text-align:center;padding:10px;font-size:0.8rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.2s;">登 录</div>
+      <div id="tabRegister" onclick="switchAuthTab('register')" style="flex:1;text-align:center;padding:10px;font-size:0.8rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.2s;">注 册</div>
+    </div>
+
+    <!-- Login Form -->
+    <div id="formLogin">
+      <input id="loginId" type="text" placeholder="手机号或邮箱" style="width:100%;padding:13px 16px;background:#0B0B0B;border:1px solid rgba(212,175,55,0.16);border-radius:12px;color:#F5F5F5;font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;outline:none;margin-bottom:12px;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(212,175,55,0.5)'" onblur="this.style.borderColor='rgba(212,175,55,0.16)'">
+      <input id="loginPass" type="password" placeholder="密码" style="width:100%;padding:13px 16px;background:#0B0B0B;border:1px solid rgba(212,175,55,0.16);border-radius:12px;color:#F5F5F5;font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;outline:none;margin-bottom:8px;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(212,175,55,0.5)'" onblur="this.style.borderColor='rgba(212,175,55,0.16)'">
+      <div id="loginMsg" style="font-size:0.75rem;min-height:20px;margin-bottom:12px;padding:0 4px;"></div>
+      <button onclick="doLogin()" style="width:100%;padding:14px;background:#D4AF37;color:#0B0B0B;border:none;border-radius:12px;font-family:'Noto Serif SC',serif;font-size:0.95rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.3s;" onmouseover="this.style.background='#F7E7A1'" onmouseout="this.style.background='#D4AF37'">登 录</button>
+      <div style="text-align:center;margin-top:16px;font-size:0.75rem;color:#666;">还没有账号？<span onclick="switchAuthTab('register')" style="color:#D4AF37;cursor:pointer;">立即注册</span></div>
+    </div>
+
+    <!-- Register Form -->
+    <div id="formRegister" style="display:none;">
+      <input id="regContact" type="text" placeholder="手机号或邮箱" style="width:100%;padding:13px 16px;background:#0B0B0B;border:1px solid rgba(212,175,55,0.16);border-radius:12px;color:#F5F5F5;font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;outline:none;margin-bottom:12px;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(212,175,55,0.5)'" onblur="this.style.borderColor='rgba(212,175,55,0.16)'">
+      <input id="regPass" type="password" placeholder="设置密码（至少6位）" style="width:100%;padding:13px 16px;background:#0B0B0B;border:1px solid rgba(212,175,55,0.16);border-radius:12px;color:#F5F5F5;font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;outline:none;margin-bottom:12px;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(212,175,55,0.5)'" onblur="this.style.borderColor='rgba(212,175,55,0.16)'">
+      <input id="regPass2" type="password" placeholder="确认密码" style="width:100%;padding:13px 16px;background:#0B0B0B;border:1px solid rgba(212,175,55,0.16);border-radius:12px;color:#F5F5F5;font-family:'Noto Sans SC',sans-serif;font-size:0.85rem;outline:none;margin-bottom:8px;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(212,175,55,0.5)'" onblur="this.style.borderColor='rgba(212,175,55,0.16)'">
+      <div id="regMsg" style="font-size:0.75rem;min-height:20px;margin-bottom:12px;padding:0 4px;"></div>
+      <button onclick="doRegister()" style="width:100%;padding:14px;background:#D4AF37;color:#0B0B0B;border:none;border-radius:12px;font-family:'Noto Serif SC',serif;font-size:0.95rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.3s;" onmouseover="this.style.background='#F7E7A1'" onmouseout="this.style.background='#D4AF37'">注 册</button>
+      <div style="text-align:center;margin-top:16px;font-size:0.75rem;color:#666;">已有账号？<span onclick="switchAuthTab('login')" style="color:#D4AF37;cursor:pointer;">立即登录</span></div>
+    </div>
+
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1147,51 +1180,117 @@ footer {
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
 }, { threshold: 0.1 });
-
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Toast
-function showToast(msg) {
+function showToast(msg, isError = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
+  t.style.borderColor = isError ? '#C44B4B' : '#D4AF37';
+  t.style.color = isError ? '#C44B4B' : '#D4AF37';
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// Submit phone
-function submitPhone() {
-  const phone = document.getElementById('phoneInput').value.trim();
-  if (!/^1[3-9]\d{9}$/.test(phone)) {
-    showToast('请输入正确的手机号');
-    return;
+// Auth modal
+function openAuth(tab = 'login') {
+  const modal = document.getElementById('authModal');
+  modal.style.display = 'flex';
+  switchAuthTab(tab);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAuth() {
+  document.getElementById('authModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('authModal')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('authModal')) closeAuth();
+});
+
+function switchAuthTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('formLogin').style.display = isLogin ? 'block' : 'none';
+  document.getElementById('formRegister').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('tabLogin').style.color = isLogin ? '#D4AF37' : '#666';
+  document.getElementById('tabLogin').style.borderBottom = isLogin ? '1px solid #D4AF37' : 'none';
+  document.getElementById('tabLogin').style.marginBottom = isLogin ? '-1px' : '0';
+  document.getElementById('tabRegister').style.color = isLogin ? '#666' : '#D4AF37';
+  document.getElementById('tabRegister').style.borderBottom = isLogin ? 'none' : '1px solid #D4AF37';
+  document.getElementById('tabRegister').style.marginBottom = isLogin ? '0' : '-1px';
+  // Clear messages
+  document.getElementById('loginMsg').textContent = '';
+  document.getElementById('regMsg').textContent = '';
+}
+
+function setMsg(id, msg, isError = true) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.color = isError ? '#C44B4B' : '#D4AF37';
+}
+
+function doLogin() {
+  const id = document.getElementById('loginId').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if (!id || !pass) { setMsg('loginMsg', '请填写账号和密码'); return; }
+
+  const users = JSON.parse(localStorage.getItem('xy_users') || '{}');
+  // Match by contact or username
+  let matched = null;
+  for (const [key, val] of Object.entries(users)) {
+    if ((key === id || val.contact === id) && val.pass === pass) {
+      matched = key; break;
+    }
   }
-  // Save to localStorage as leads
-  const leads = JSON.parse(localStorage.getItem('xingyue_leads') || '[]');
-  leads.push({ phone, time: new Date().toLocaleString() });
-  localStorage.setItem('xingyue_leads', JSON.stringify(leads));
-  document.getElementById('phoneInput').value = '';
-  showToast('✓ 已收到，我们会在24小时内联系您');
+
+  if (matched) {
+    localStorage.setItem('xy_current', matched);
+    closeAuth();
+    showToast('✓ 登录成功，欢迎回来');
+    // TODO: redirect to app page
+  } else {
+    setMsg('loginMsg', '账号或密码错误');
+  }
 }
 
-// Copy wechat
-function copyWechat() {
-  // 把这里改成你的微信号
-  const wechat = '你的微信号';
-  navigator.clipboard.writeText(wechat).then(() => {
-    showToast('✓ 微信号已复制');
-  }).catch(() => {
-    showToast('微信号：' + wechat);
-  });
+function doRegister() {
+  const contact = document.getElementById('regContact').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+
+  if (!contact || !pass) { setMsg('regMsg', '请填写完整信息'); return; }
+
+  const isPhone = /^1[3-9]\d{9}$/.test(contact);
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+  if (!isPhone && !isEmail) { setMsg('regMsg', '请输入正确的手机号或邮箱'); return; }
+  if (pass.length < 6) { setMsg('regMsg', '密码至少6位'); return; }
+  if (pass !== pass2) { setMsg('regMsg', '两次密码不一致'); return; }
+
+  const users = JSON.parse(localStorage.getItem('xy_users') || '{}');
+  if (users[contact]) { setMsg('regMsg', '该账号已注册'); return; }
+
+  // Save user
+  users[contact] = { contact, pass, createdAt: new Date().toLocaleString() };
+  localStorage.setItem('xy_users', JSON.stringify(users));
+
+  // Show success then switch to login
+  setMsg('regMsg', '✓ 注册成功！正在跳转登录...', false);
+  setTimeout(() => {
+    switchAuthTab('login');
+    document.getElementById('loginId').value = contact;
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+  }, 1200);
 }
 
-// Enter key for phone
-document.getElementById('phoneInput')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') submitPhone();
+// Esc to close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAuth();
 });
 </script>
 </body>
